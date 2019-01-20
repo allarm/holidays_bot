@@ -35,6 +35,33 @@ class HolidaysCal:
                 return_events.append(_)
         return(return_events)
 
+def send_slack(channel, title, message):
+    webhook_url = ''
+    slack_data = {
+        'link_names': 1,
+        "text": title,
+        "attachments":[
+
+            {
+                "text": message,
+                "attachment_type": "default",
+            }
+        ],
+        'username': 'Handover Bot',
+        'icon_emoji': ':robot_face:',
+        'channel': channel,
+    }
+    response = requests.post(
+        webhook_url,
+        data=json.dumps(slack_data),
+        headers={'Content-Type': 'application/json'}
+    )
+    if response.status_code != 200:
+        raise ValueError(
+            'Request to slack returned an error %s, the response is:\n%s'
+            % (response.status_code, response.text)
+        )
+
 if __name__ == "__main__":
 
     days=30
