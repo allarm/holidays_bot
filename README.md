@@ -1,11 +1,7 @@
-# Calendars
+# Holidays Bot
 
-Merging holidays calendars together into one `ics` file. 
+Show coming holidays.
 
 ## Usage
 
 export SLACK_HB_WEBHOOK='webhook url'
-
-## Links
-
-https://github.com/agraboso/merge_ics
