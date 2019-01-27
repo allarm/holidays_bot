@@ -52,19 +52,8 @@ def send_slack(webhook_url, channel, text):
 
     """
 
-    # slack_data = {
-    #     'link_names': 1,
-    #     "text": text,
-    #     "attachments": attachments,
-    #     'username': 'Holidays Bot',
-    #     'icon_emoji': ':robot_face:',
-    #     'channel': channel,
-    # }
-
     slack_data = text
 
-    # print(slack_data)
-    # exit()
     response = requests.post(
         webhook_url,
         data=json.dumps(slack_data),
@@ -79,7 +68,7 @@ def send_slack(webhook_url, channel, text):
 
 if __name__ == "__main__":
 
-    days = 30
+    days = 90
 
     webhook_url = 'https://hooks.slack.com/services/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'
 
@@ -88,26 +77,27 @@ if __name__ == "__main__":
         'Ireland': 'https://calendar.google.com/calendar/ical/en.irish%23holiday%40group.v.calendar.google.com/public/basic.ics'}
 
     flags = {
-        'USA': ':flag-us',
-        'Singapore': ':flag-sg',
-        'Ireland': ':flag-ir'
+        'USA': ':flag-us:',
+        'Singapore': ':flag-sg:',
+        'Ireland': ':flag-ie:'
     }
 
-    output=[]
+    output = []
 
-    output_json= {
+    output_json = {
         "attachments": [
             {
                 "title": "Holidays",
                 "attachment_type": "default",
                 "color": "#764FA5",
-                "fields": [ ],
+                "fields": [],
             }
         ]
     }
 
     for k, v in url.items():
         country = k
+        flag = flags[k]
         c = HolidaysCal(url[k])
         holidays = None
         holidays = c.GetEvents(days)
@@ -118,19 +108,23 @@ if __name__ == "__main__":
 
             print(holidays)
 
-            output=[]
+            output = []
 
             for _ in holidays:
                 output.append(_.name)
                 output.append(" - ")
-                output.append("{} ({})".format(_.begin.humanize(),
-                                _.begin.format('MMMM DD, YYYY')))
+                output.append(
+                    "{} ({})".format(_.begin.humanize(),
+                    _.begin.format('MMMM DD, YYYY')
+                                    )
+                )
+
                 output.append("\n\n")
                 # we have now a list of holiday for a country in output
 
             output_json['attachments'][0]['fields'].append(
                 {
-                    "title": country,
+                    "title": country+" "+flag,
                     "value": "",
                     "short": True
                 }
