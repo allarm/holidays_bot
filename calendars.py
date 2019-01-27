@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import os
 from ics import Calendar
 from pprint import pprint
 from ics import Event
@@ -70,7 +71,14 @@ if __name__ == "__main__":
 
     days = 90
 
-    webhook_url = 'https://hooks.slack.com/services/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'
+    try:
+        webhook_url = os.environ["SLACK_HB_WEBHOOK"]
+    except Exception as e:
+        print("OS variable is not defined, exiting")
+        raise e
+
+    print(webhook_url)
+    # exit(0)
 
     url = {'USA': 'https://calendar.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics',
         'Singapore': 'https://calendar.google.com/calendar/ical/en.singapore%23holiday%40group.v.calendar.google.com/public/basic.ics',
@@ -106,7 +114,7 @@ if __name__ == "__main__":
             # print('Holidays in {}'.format(country))
             # output.append("Holidays in {}".format(country))
 
-            print(holidays)
+            # print(holidays)
 
             output = []
 
@@ -138,6 +146,6 @@ if __name__ == "__main__":
                 }
             )
 
-    pprint(output_json)
+    # pprint(output_json)
 
     send_slack(webhook_url=webhook_url, channel='', text=output_json)
