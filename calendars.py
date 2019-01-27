@@ -39,7 +39,8 @@ class HolidaysCal:
         for _ in self.__calendar.events:     # for each event in calendar
             if _.intersects(ev):
                 return_events.append(_)
-        return return_events
+
+        return sorted(return_events, key=lambda event: event.begin)
 
 
 def send_slack(webhook_url, channel, text):
@@ -77,7 +78,7 @@ if __name__ == "__main__":
         print("OS variable is not defined, exiting")
         raise e
 
-    print(webhook_url)
+    # print(webhook_url)
     # exit(0)
 
     url = {'USA': 'https://calendar.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics',
