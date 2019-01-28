@@ -79,11 +79,15 @@ if __name__ == "__main__":
 
     url = {'USA': 'https://calendar.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics',
         'Singapore': 'https://calendar.google.com/calendar/ical/en.singapore%23holiday%40group.v.calendar.google.com/public/basic.ics',
+        'France': 'https://calendar.google.com/calendar/ical/en.french%23holiday%40group.v.calendar.google.com/public/basic.ics',
+        'Japan': 'https://calendar.google.com/calendar/ical/en.japanese%23holiday%40group.v.calendar.google.com/public/basic.ics',
         'Ireland': 'https://calendar.google.com/calendar/ical/en.irish%23holiday%40group.v.calendar.google.com/public/basic.ics'}
 
     flags = {
         'USA': ':flag-us:',
         'Singapore': ':flag-sg:',
+        'France': ':flag-fr:',
+        'Japan': ':flag-jp:',
         'Ireland': ':flag-ie:'
     }
 
