@@ -70,16 +70,12 @@ def send_slack(webhook_url, channel, text):
 
 if __name__ == "__main__":
 
-    days = 90
-
     try:
         webhook_url = os.environ["SLACK_HB_WEBHOOK"]
+        days = os.environ["SLACK_HB_DAYS"]
     except Exception as e:
         print("OS variable is not defined, exiting")
         raise e
-
-    # print(webhook_url)
-    # exit(0)
 
     url = {'USA': 'https://calendar.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics',
         'Singapore': 'https://calendar.google.com/calendar/ical/en.singapore%23holiday%40group.v.calendar.google.com/public/basic.ics',
@@ -96,7 +92,7 @@ if __name__ == "__main__":
     output_json = {
         "attachments": [
             {
-                "title": "Holidays",
+                "title": "Holidays in next {} days",
                 "attachment_type": "default",
                 "color": "#764FA5",
                 "fields": [],
@@ -112,11 +108,6 @@ if __name__ == "__main__":
         holidays = c.GetEvents(days)
 
         if holidays:
-            # print('Holidays in {}'.format(country))
-            # output.append("Holidays in {}".format(country))
-
-            # print(holidays)
-
             output = []
 
             for _ in holidays:
@@ -128,7 +119,7 @@ if __name__ == "__main__":
                                     )
                 )
 
-                output.append("\n\n")
+                output.append("\n")
                 # we have now a list of holiday for a country in output
 
             output_json['attachments'][0]['fields'].append(
@@ -141,12 +132,10 @@ if __name__ == "__main__":
 
             output_json['attachments'][0]['fields'].append(
                 {
-                    "title": "Holidays",
+                    "title": "",
                     "value": ''.join(output),
                     "short": False
                 }
             )
-
-    # pprint(output_json)
 
     send_slack(webhook_url=webhook_url, channel='', text=output_json)
