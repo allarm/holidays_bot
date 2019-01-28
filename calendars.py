@@ -72,7 +72,7 @@ if __name__ == "__main__":
 
     try:
         webhook_url = os.environ["SLACK_HB_WEBHOOK"]
-        days = os.environ["SLACK_HB_DAYS"]
+        days = int(os.environ["SLACK_HB_DAYS"])
     except Exception as e:
         print("OS variable is not defined, exiting")
         raise e
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     output_json = {
         "attachments": [
             {
-                "title": "Holidays in next {} days",
+                "title": "Holidays in next {} days".format(days),
                 "attachment_type": "default",
                 "color": "#764FA5",
                 "fields": [],
